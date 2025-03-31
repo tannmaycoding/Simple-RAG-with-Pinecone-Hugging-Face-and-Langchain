@@ -24,10 +24,10 @@ if "pinecone_api_key" not in st.session_state:
     st.session_state.pinecone_api_key = ""
 
 if "pinecone_env" not in st.session_state:
-    st.session_state.hf_api_key = ""
+    st.session_state.pinecone_env = ""
 
 if "pinecone_index_name" not in st.session_state:
-    st.session_state.hf_api_key = ""
+    st.session_state.pinecone_index_name = ""
 
 if "embeddings" not in st.session_state:
     st.session_state.embeddings = HuggingFaceInferenceAPIEmbeddings(
