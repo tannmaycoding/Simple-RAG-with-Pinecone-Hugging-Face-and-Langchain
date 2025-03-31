@@ -1,0 +1,15 @@
+langchain~=0.3.20
+langchain-huggingface~=0.1.2
+langchain-community~=0.3.19
+langchain-pinecone~=0.2.3
+langchain-text-splitters~=0.3.6
+langchain-tests~=0.3.15
+langsmith~=0.3.13
+pinecone~=5.4.2
+pinecone-plugin-interface~=0.0.7
+pinecone-plugin-inference~=3.1.0
+pypdf~=5.3.1
+streamlit
+huggingface-hub~=0.29.3
+sentence-transformers~=3.4.1
+transformers~=4.49.0
