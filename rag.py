@@ -29,18 +29,6 @@ if "pinecone_env" not in st.session_state:
 if "pinecone_index_name" not in st.session_state:
     st.session_state.pinecone_index_name = ""
 
-if "embeddings" not in st.session_state:
-    st.session_state.embeddings = HuggingFaceInferenceAPIEmbeddings(
-        api_key=st.session_state.hf_api_key, model_name="sentence-transformers/all-MiniLM-l6-v2"
-    )
-
-if "vector_store" not in st.session_state:
-    st.session_state.vector_store = PineconeVectorStore(
-        index_name=st.session_state.pinecone_index_name,
-        embedding=st.session_state.embeddings,
-        pinecone_api_key=st.session_state.pinecone_api_key
-    )
-
 # 🔹 Ensure Chat History is Initialized
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
@@ -58,12 +46,24 @@ if st.session_state.mode == "login":
             if st.session_state.pinecone_api_key is not None:
                 if st.session_state.pinecone_env is not None:
                     if st.session_state.pinecone_index_name is not None:
-                        st.session_state.mode = "pdfs"
+                        if "embeddings" not in st.session_state:
+                            st.session_state.embeddings = HuggingFaceInferenceAPIEmbeddings(
+                                api_key=st.session_state.hf_api_key, model_name="sentence-transformers/all-MiniLM-l6-v2"
+                            )
+
+                        if "vector_store" not in st.session_state:
+                            st.session_state.vector_store = PineconeVectorStore(
+                                index_name=st.session_state.pinecone_index_name,
+                                embedding=st.session_state.embeddings,
+                                pinecone_api_key=st.session_state.pinecone_api_key
+                            )
+
+                        st.session_state.mode = "input"
                         st.rerun()
 
 
 # 🔹 PDF Upload & Processing
-if st.session_state.mode == "pdfs":
+if st.session_state.mode == "input":
     uploaded_files = st.file_uploader("Upload PDFs", accept_multiple_files=True, type="pdf")
 
     if st.button("Process PDFs"):
